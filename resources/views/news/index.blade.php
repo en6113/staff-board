@@ -12,6 +12,18 @@
                 </a>
             </div>
 
+            <div class="flex space-x-4 mb-4 border-b">
+                <a href="{{ route('news.index', ['tab' => 'all']) }}"
+                    class="py-2 px-4 {{ $currentTab === 'all' ? 'border-b-2 border-blue-500 text-blue-600 font-bold' : 'text-gray-500' }}">
+                    すべて
+                </a>
+            
+                <a href="{{ route('news.index', ['tab' => 'hidden']) }}"
+                    class="py-2 px-4 {{ $currentTab === 'hidden' ? 'border-b-2 border-blue-500 text-blue-600 font-bold' : 'text-gray-500' }}">
+                    非表示中
+                </a>
+            </div>
+
             @if($newsItems->isEmpty())
                 <p class="text-gray-500 py-4">お知らせはありません。</p>
             @else
@@ -19,8 +31,6 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    状態</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     タイトル</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -34,20 +44,14 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach($newsItems as $news)
                                 <tr class="hover:bg-gray-50 transition">
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span
-                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $news->is_unread ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-600' }}">
-                                            {{ $news->is_unread ? '未読' : '既読' }}
-                                        </span>
-                                    </td>
                                     <td class="px-6 py-4">
                                         <a href="{{ route('news.show', $news->id) }}"
-                                            class="text-sm font-medium text-blue-600 hover:underline block truncate max-w-md">
+                                            class="text-sm font-medium block truncate max-w-md hover:underline {{ $news->is_read_by_user ? 'text-gray-400' : 'text-blue-600 font-bold'}}">
                                             {{ $news->title }}
                                         </a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="text-sm text-gray-700">{{ $news->priority }}</span>
+                                        <span class="text-sm text-gray-700">{{ $news->priority?->label() ?? '未設定' }}</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $news->created_at->format('Y/m/d H:i') }}
@@ -57,16 +61,30 @@
                                         @if(auth()->id() === $news->user_id)
                                             <a href="{{ route('news.edit', $news->id) }}"
                                                 class="text-amber-600 hover:text-amber-900 mr-2">編集</a>
-                                        @endif
-
-                                        {{-- 既読の場合のみ非表示ボタンを表示 --}}
-                                        @if(!$news->is_unread)
-                                            <form action="{{ route('news.hide', $news->id) }}" method="POST" class="inline-block"
-                                                onsubmit="return confirm('このお知らせを一覧から非表示にしますか？');">
+                                            <form action="{{ route('news.destroy', $news->id) }}" method="POST" class="inline" onsubmit="return confirm('本当に削除しますか？');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-gray-400 hover:text-red-500">非表示</button>
+                                                <button type="submit" class="text-red-600 hover:text-red-900 mr-2 cursor-pointer">削除</button>
                                             </form>
+                                        @endif
+
+                                        {{-- 非表示中タブのときは「再表示」ボタンを表示 --}}
+                                        @if($currentTab === 'hidden')
+                                            <form action="{{ route('news.unhide', $news->id) }}" method="POST" class="inline-block">
+                                                @csrf
+                                                @method('PATCH') 
+                                                <button type="submit" class="text-blue-600 hover:text-blue-900 cursor-pointer">再表示</button>
+                                            </form>
+                                        @else
+                                            {{-- 通常時（すべて）のときは、既読の場合のみ非表示ボタンを表示 --}}
+                                            @if(!$news->is_unread)
+                                                <form action="{{ route('news.hide', $news->id) }}" method="POST" class="inline-block"
+                                                    onsubmit="return confirm('このお知らせを一覧から非表示にしますか？');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-gray-400 hover:text-red-500">非表示</button>
+                                                </form>
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>
@@ -76,7 +94,7 @@
                 </div>
                 {{-- ページネーション --}}
                 <div class="mt-4">
-                    {{ $newsItems->links() }}
+                    {{ $newsItems->appends(['tab' => $currentTab])->links() }}
                 </div>
             @endif
         </div>

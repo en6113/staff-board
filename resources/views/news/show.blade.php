@@ -6,24 +6,8 @@
 
             {{-- メタ情報（ヘッダー部分） --}}
             <div class="border-b pb-4 mb-6">
-                <div class="flex items-center space-x-2 mb-2">
-                    {{-- 優先度の色分け --}}
-                    @if($news->priority === '至急')
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 animate-pulse">
-                            至急
-                        </span>
-                    @elseif($news->priority === '重要')
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
-                            重要
-                        </span>
-                    @else
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                            通常
-                        </span>
-                    @endif
+                <div class="flex items-center justify-between mb-2">
+                    <span>優先度: {{ $news->priority?->label() ?? '未設定' }}</span>
 
                     <span class="text-xs text-gray-500">
                         投稿日: {{ $news->created_at->format('Y/m/d H:i') }}
@@ -40,16 +24,13 @@
             </div>
 
             {{-- 本文 --}}
-            <div
-                class="text-gray-800 text-sm leading-relaxed whitespace-pre-wrap min-h-[200px] bg-gray-50 p-4 rounded border border-gray-100">
-                {!! nl2br(e($news->content)) !!}
-            </div>
+            <div class="text-gray-800 text-sm leading-relaxed whitespace-pre-wrap min-h-[200px] bg-gray-50 p-4 rounded border border-gray-100">{{ $news->content }}</div>
 
             {{-- フッター・操作ボタン --}}
             <div class="flex justify-between items-center mt-8 pt-4 border-t">
-                <a href="{{ route('news.index') }}"
+                <a href="{{ url()->previous() }}"
                     class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded transition text-sm">
-                    &larr; 一覧に戻る
+                    &larr; 戻る
                 </a>
 
                 <div class="flex space-x-2">
