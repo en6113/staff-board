@@ -18,11 +18,10 @@
 
                 <div>
                     <label for="priority" class="block text-sm font-medium text-gray-700">優先度</label>
-                    <select name="priority" id="priority"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option value="通常" {{ old('priority', $news->priority) == '通常' ? 'selected' : '' }}>通常</option>
-                        <option value="重要" {{ old('priority', $news->priority) == '重要' ? 'selected' : '' }}>重要</option>
-                        <option value="至急" {{ old('priority', $news->priority) == '至急' ? 'selected' : '' }}>至急</option>
+                    <select name="priority" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        @foreach(\App\Enums\NewsPriority::cases() as $priority)
+                            <option value="{{ old('priority', $news->priority) }}">{{ $priority->label() }}</option>
+                        @endforeach
                     </select>
                 </div>
 

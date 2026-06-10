@@ -24,40 +24,17 @@
                     @foreach($newsItems as $news)
                         <li class="py-3 flex justify-between items-center hover:bg-gray-50 px-2 rounded-lg transition" id="news-item-{{ $news->id }}">
                             <div class="flex items-center space-x-3 min-w-0 flex-1">
-                                {{-- 未読・既読バッジ --}}
-                                @if($news->is_unread) {{-- ※未読判定のロジック（例: $news->users()->where('user_id', auth()->id())->exists() の否定など） --}}
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 shrink-0">
-                                        未読
-                                    </span>
-                                @else
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 shrink-0">
-                                        既読
-                                    </span>
-                                @endif
-
                                 {{-- タイトルと日時 --}}
                                 <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between gap-4">
-                                    <a href="{{ route('news.show', $news->id) }}" class="block text-sm font-medium text-gray-900 hover:text-blue-600 truncate">
+                                    <a href="{{ route('news.show', $news->id) }}"
+                                        class="text-sm font-medium block truncate max-w-md hover:underline {{ $news->is_read_by_user ? 'text-gray-400' : 'text-blue-600 font-bold'}}">
                                         {{ $news->title }}
                                     </a>
-                                    <span class="block text-xs text-gray-400 shrink-0 mt-1 sm:mt-0">
+                                    <span class="block text-gray-400 shrink-0 mt-1 sm:mt-0">
                                         {{ $news->created_at->format('Y/m/d H:i') }}
                                     </span>
                                 </div>
                             </div>
-
-                            {{-- 既読の場合のみ削除（非表示）ボタンを表示 --}}
-                            @if(!$news->is_unread)
-                                <div class="ml-4 shrink-0">
-                                    <form action="{{ route('news.hide', $news->id) }}" method="POST" onsubmit="return confirm('このお知らせをホーム画面から非表示にしますか？');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-xs text-gray-400 hover:text-red-500 border border-gray-200 hover:border-red-200 rounded px-2 py-1 transition bg-white shadow-sm">
-                                            非表示
-                                        </button>
-                                    </form>
-                                </div>
-                            @endif
                         </li>
                     @endforeach
                 </ul>

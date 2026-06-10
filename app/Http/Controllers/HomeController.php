@@ -10,8 +10,8 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $newsItems = News::all();
-        $posts = Post::all();
+        $newsItems = News::latest()->get();
+        $posts = Post::latest()->get();
 
         return view('home', ['user' => $request->user(),'newsItems' => $newsItems, 'posts' => $posts]);
     }
