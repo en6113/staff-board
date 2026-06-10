@@ -2,18 +2,18 @@
     <div class="container mx-auto px-4 max-w-4xl">
         <div class="flex justify-between items-center py-4">
             {{-- ロゴ --}}
-            <a href="{{ route('staffBoard.index') }}" class="text-white text-xl font-bold hover:text-gray-300">
+            <a href="{{ route('home') }}" class="text-white text-xl font-bold hover:text-gray-300">
                 📋 StaffBoard
             </a>
 
             {{-- ナビゲーションリンク --}}
             <div class="flex items-center space-x-4">
                 @auth
-                    <a href="{{ route('news.index') }}" class="text-gray-300 hover:text-white">
-                        お知らせ一覧
+                    <a href="{{ route('news.create') }}" class="text-gray-300 hover:text-white">
+                        お知らせ登録
                     </a>
-                    <a href="{{ route('posts.index') }}" class="text-gray-300 hover:text-white">
-                        掲示・回覧一覧
+                    <a href="{{ route('posts.create') }}" class="text-gray-300 hover:text-white">
+                        掲示・回覧登録
                     </a>
                     <span class="text-gray-300">
                         {{ auth()->user()->name }}さん
