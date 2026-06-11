@@ -51,17 +51,15 @@
                                         </a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="text-sm text-gray-700">{{ $news->priority?->label() ?? '未設定' }}</span>
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium shrink-0 {{ $news->priority->colorClass() }}">
+                                            {{ $news->priority->label() }}
+                                        </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $news->created_at->format('Y/m/d H:i') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                        @if(auth()->id() === $news->user_id)
-                                            <a href="{{ route('news.edit', $news->id) }}"
-                                                class="text-amber-600 hover:text-amber-900 mr-2">編集</a>
-                                        @endif
-
                                         {{-- 非表示中タブのときは「再表示」ボタンを表示 --}}
                                         @if($currentTab === 'hidden')
                                             <form action="{{ route('news.unhide', $news->id) }}" method="POST" class="inline-block">

@@ -15,6 +15,9 @@
                     <a href="{{ route('posts.create') }}" class="text-gray-300 hover:text-white">
                         掲示・回覧登録
                     </a>
+                    <a href="{{ route('sent.index') }}" class="text-gray-300 hover:text-white">
+                        送信一覧
+                    </a>
                     <span class="text-gray-300">
                         {{ auth()->user()->name }}さん
                     </span>

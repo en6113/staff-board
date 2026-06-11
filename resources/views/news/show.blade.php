@@ -7,7 +7,10 @@
             {{-- メタ情報（ヘッダー部分） --}}
             <div class="border-b pb-4 mb-6">
                 <div class="flex items-center justify-between mb-2">
-                    <span>優先度: {{ $news->priority?->label() ?? '未設定' }}</span>
+                    <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium shrink-0 {{ $news->priority->colorClass() }}">
+                        {{ $news->priority->label() }}
+                    </span>
 
                     <span class="text-xs text-gray-500">
                         投稿日: {{ $news->created_at->format('Y/m/d H:i') }}
@@ -32,16 +35,6 @@
                     class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded transition text-sm">
                     &larr; 戻る
                 </a>
-
-                <div class="flex space-x-2">
-                    {{-- 投稿者本人の場合は編集ボタンを表示 --}}
-                    @if(auth()->id() === $news->user_id)
-                        <a href="{{ route('news.edit', $news->id) }}"
-                            class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded shadow-sm transition text-sm">
-                            編集
-                        </a>
-                    @endif
-                </div>
             </div>
 
         </div>

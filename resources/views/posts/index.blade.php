@@ -69,11 +69,6 @@
                                         {{ $post->expires_at ? \Carbon\Carbon::parse($post->expires_at)->format('Y/m/d H:i') : '未設定' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                        @if(auth()->id() === $post->user_id)
-                                            <a href="{{ route('posts.edit', $post->id) }}"
-                                                class="text-amber-600 hover:text-amber-900 mr-2">編集</a>
-                                        @endif
-
                                         {{-- 非表示中タブのときは「再表示」ボタンを表示 --}}
                                         @if($currentTab === 'hidden')
                                             <form action="{{ route('posts.unhide', $post->id) }}" method="POST" class="inline-block">

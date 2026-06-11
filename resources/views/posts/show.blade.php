@@ -51,16 +51,6 @@
                     class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded transition text-sm">
                     &larr; 一覧に戻る
                 </a>
-
-                <div class="flex space-x-2">
-                    {{-- 投稿者本人の場合は編集ボタンを表示 --}}
-                    @if(auth()->id() === $post->user_id)
-                        <a href="{{ route('posts.edit', $post->id) }}"
-                            class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded shadow-sm transition text-sm">
-                            編集する
-                        </a>
-                    @endif
-                </div>
             </div>
 
         </div>
