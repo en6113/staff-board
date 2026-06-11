@@ -34,16 +34,6 @@
                 </a>
 
                 <div class="flex space-x-2">
-                    <form action="{{ route('news.hide', $news->id) }}" method="POST"
-                        onsubmit="return confirm('このお知らせを非表示にしますか？（一覧やホームに戻ります）');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                            class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-600 font-medium py-2 px-4 rounded transition text-sm">
-                            非表示
-                        </button>
-                    </form>
-
                     {{-- 投稿者本人の場合は編集ボタンを表示 --}}
                     @if(auth()->id() === $news->user_id)
                         <a href="{{ route('news.edit', $news->id) }}"

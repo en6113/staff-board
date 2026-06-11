@@ -10,16 +10,12 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">区分</label>
-                    <div class="mt-2 flex items-center space-x-4">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="type" value="notice" {{ old('type', 'notice') == 'notice' ? 'checked' : '' }} class="text-green-600 focus:ring-green-500">
-                            <span class="ml-2 text-sm text-gray-700">掲示</span>
-                        </label>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="type" value="circular" {{ old('type') == 'circular' ? 'checked' : '' }} class="text-green-600 focus:ring-green-500">
-                            <span class="ml-2 text-sm text-gray-700">回覧</span>
-                        </label>
-                    </div>
+                    <select name="type" id="type"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        @foreach(\App\Enums\PostType::cases() as $type)
+                            <option value="{{ $type->value }}">{{ $type->label() }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div>
@@ -30,10 +26,10 @@
                 </div>
 
                 <div>
-                    <label for="file" class="block text-sm font-medium text-gray-700">添付ファイル</label>
-                    <input type="file" name="file" id="file"
+                    <label for="file_path" class="block text-sm font-medium text-gray-700">添付ファイル</label>
+                    <input type="file" name="file_path" id="file_path"
                         class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100">
-                    @error('file') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    @error('file_path') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
