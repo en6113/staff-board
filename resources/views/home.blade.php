@@ -66,8 +66,9 @@
                         <li class="py-3 flex justify-between items-center hover:bg-gray-50 px-2 rounded-lg transition">
                             <div class="flex items-center space-x-3 min-w-0 flex-1">
                                 {{-- 区分（掲示 or 回覧） --}}
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $post->type === 'circular' ? 'bg-purple-100 text-purple-800' : 'bg-amber-100 text-amber-800' }} shrink-0">
-                                    {{ $post->type === 'circular' ? '回覧' : '掲示' }}
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium shrink-0 {{ $post->type->colorClass() }}">
+                                    {{ $post->type->label() }}
                                 </span>
 
                                 <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between gap-4">

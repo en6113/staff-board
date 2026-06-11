@@ -53,7 +53,9 @@
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <span
-                                                        class="text-sm text-gray-700">{{ $news->priority?->label() ?? '未設定' }}</span>
+                                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium shrink-0 {{ $news->priority->colorClass() }}">
+                                                        {{ $news->priority->label() }}
+                                                    </span>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                     {{ $news->created_at->format('Y/m/d H:i') }}
@@ -111,13 +113,13 @@
                                             <tr class="hover:bg-gray-50 transition">
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <span
-                                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $post->type === 'circular' ? 'bg-purple-100 text-purple-800' : 'bg-amber-100 text-amber-800' }}">
-                                                        {{ $post->type === 'circular' ? '回覧' : '掲示' }}
+                                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium shrink-0 {{ $post->type->colorClass() }}">
+                                                        {{ $post->type->label() }}
                                                     </span>
                                                 </td>
                                                 <td class="px-6 py-4">
                                                     <a href="{{ route('posts.show', $post->id) }}"
-                                                        class="text-sm font-medium text-green-600 hover:underline block truncate max-w-md">
+                                                        class="text-sm font-medium text-gray-800 hover:underline block truncate max-w-md">
                                                         {{ $post->title }}
                                                     </a>
                                                 </td>

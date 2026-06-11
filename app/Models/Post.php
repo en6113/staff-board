@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PostType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,10 @@ class Post extends Model
         'file_path',
         'type',
         'expires_at',
+    ];
+
+    protected $casts = [
+        'type' => PostType::class,
     ];
 
     // 掲示・回覧の投稿者を取得する
