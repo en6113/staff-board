@@ -57,15 +57,9 @@
                                         {{ $news->created_at->format('Y/m/d H:i') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                        {{-- 編集ボタン（投稿者または管理者用） --}}
                                         @if(auth()->id() === $news->user_id)
                                             <a href="{{ route('news.edit', $news->id) }}"
                                                 class="text-amber-600 hover:text-amber-900 mr-2">編集</a>
-                                            <form action="{{ route('news.destroy', $news->id) }}" method="POST" class="inline" onsubmit="return confirm('本当に削除しますか？');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-900 mr-2 cursor-pointer">削除</button>
-                                            </form>
                                         @endif
 
                                         {{-- 非表示中タブのときは「再表示」ボタンを表示 --}}

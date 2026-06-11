@@ -13,5 +13,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('news', NewsController::class);
 
     Route::delete('posts/{post}/hide', [PostController::class, 'hide'])->name('posts.hide');
+    Route::patch('posts/{post}/unhide', [PostController::class, 'unhide'])->name('posts.unhide');
     Route::resource('posts', PostController::class);
 });

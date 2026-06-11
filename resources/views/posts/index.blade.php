@@ -12,6 +12,18 @@
                 </a>
             </div>
 
+            <div class="flex space-x-4 mb-4 border-b">
+                <a href="{{ route('posts.index', ['tab' => 'all']) }}"
+                    class="py-2 px-4 {{ $currentTab === 'all' ? 'border-b-2 border-blue-500 text-blue-600 font-bold' : 'text-gray-500' }}">
+                    すべて
+                </a>
+            
+                <a href="{{ route('posts.index', ['tab' => 'hidden']) }}"
+                    class="py-2 px-4 {{ $currentTab === 'hidden' ? 'border-b-2 border-blue-500 text-blue-600 font-bold' : 'text-gray-500' }}">
+                    非表示中
+                </a>
+            </div>
+
             @if($posts->isEmpty())
                 <p class="text-gray-500 py-4">掲示・回覧はありません。</p>
             @else
@@ -62,14 +74,24 @@
                                                 class="text-amber-600 hover:text-amber-900 mr-2">編集</a>
                                         @endif
 
-                                        {{-- 非表示ボタン（例：既読状態であれば非表示にできる仕様） --}}
-                                        @if(!$post->is_unread)
-                                            <form action="{{ route('posts.hide', $post->id) }}" method="POST" class="inline-block"
-                                                onsubmit="return confirm('この掲示・回覧を一覧から非表示にしますか？');">
+                                        {{-- 非表示中タブのときは「再表示」ボタンを表示 --}}
+                                        @if($currentTab === 'hidden')
+                                            <form action="{{ route('posts.unhide', $post->id) }}" method="POST" class="inline-block">
                                                 @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-gray-400 hover:text-red-500">非表示</button>
+                                                @method('PATCH') 
+                                                <button type="submit" class="text-blue-600 hover:text-blue-900 cursor-pointer">再表示</button>
                                             </form>
+                                        @else
+
+                                            {{-- 非表示ボタン（例：既読状態であれば非表示にできる仕様） --}}
+                                            @if(!$post->is_unread)
+                                                <form action="{{ route('posts.hide', $post->id) }}" method="POST" class="inline-block"
+                                                    onsubmit="return confirm('この掲示・回覧を一覧から非表示にしますか？');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-gray-400 hover:text-red-500">非表示</button>
+                                                </form>
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>
@@ -77,8 +99,9 @@
                         </tbody>
                     </table>
                 </div>
+                {{-- ページネーション --}}
                 <div class="mt-4">
-                    {{ $posts->links() }}
+                    {{ $posts->appends(['tab' => $currentTab])->links() }}
                 </div>
             @endif
         </div>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\News;
 use App\Http\Requests\NewsRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
 {
@@ -16,13 +15,13 @@ class NewsController extends Controller
         $currentTab = $request->get('tab', 'all');
 
         if ($currentTab === 'hidden') {
-            // 【非表示中】
+            // 【非表示中タブ】
             $newsItems = News::whereHas('users', function ($query) use ($userId) {
                 $query->where('user_id', $userId)
                     ->where('news_user.is_hidden', 1);
             })->with('users')->latest()->paginate(15);
         } else {
-            // 【すべて】非表示を除く
+            // 【すべてタブ】非表示を除く
             $newsItems = News::whereDoesntHave('users', function ($query) use ($userId) {
                 $query->where('user_id', $userId)
                     ->where('news_user.is_hidden', 1);
@@ -43,6 +42,7 @@ class NewsController extends Controller
         $validated['user_id'] = auth()->id();
 
         $news = News::create($validated);
+
 
         $news->users()->attach(auth()->id(), ['is_read' => 1]);
 
