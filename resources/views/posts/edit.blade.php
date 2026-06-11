@@ -55,20 +55,9 @@
                             class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded shadow-sm transition">
                             更新
                         </button>
-
-                        <button type="submit" form="delete-form" class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded shadow-sm transition">
-                            削除
-                        </button>
                     @endif
                 </div>
             </form>
-
-            @if(auth()->id() === $post->user_id)
-                <form id="delete-form" action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('この掲示・回覧を本当に削除しますか？')">
-                    @csrf
-                    @method('DELETE')
-                </form>
-            @endif
         </div>
     </div>
 </div>

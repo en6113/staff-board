@@ -24,14 +24,17 @@
                     @foreach($newsItems as $news)
                         <li class="py-3 flex justify-between items-center hover:bg-gray-50 px-2 rounded-lg transition" id="news-item-{{ $news->id }}">
                             <div class="flex items-center space-x-3 min-w-0 flex-1">
-                                {{-- タイトルと日時 --}}
+                                {{-- 優先順位（通常 or 重要 or 至急） --}}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium shrink-0 {{ $news->priority->colorClass() }}">
+                                    {{ $news->priority->label() }}
+                                </span>
                                 <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between gap-4">
                                     <a href="{{ route('news.show', $news->id) }}"
                                         class="text-sm font-medium block truncate max-w-md hover:underline {{ $news->is_read_by_user ? 'text-gray-400' : 'text-blue-600 font-bold'}}">
                                         {{ $news->title }}
                                     </a>
                                     <span class="block text-gray-400 shrink-0 mt-1 sm:mt-0">
-                                        {{ $news->created_at->format('Y/m/d H:i') }}
+                                        {{ $news->created_at->format('Y/m/d') }}
                                     </span>
                                 </div>
                             </div>
@@ -62,7 +65,7 @@
                     @foreach($posts as $post)
                         <li class="py-3 flex justify-between items-center hover:bg-gray-50 px-2 rounded-lg transition">
                             <div class="flex items-center space-x-3 min-w-0 flex-1">
-                                {{-- 区分（掲示 or 回覧）バッジの例 --}}
+                                {{-- 区分（掲示 or 回覧） --}}
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $post->type === 'circular' ? 'bg-purple-100 text-purple-800' : 'bg-amber-100 text-amber-800' }} shrink-0">
                                     {{ $post->type === 'circular' ? '回覧' : '掲示' }}
                                 </span>
@@ -71,7 +74,7 @@
                                     <a href="{{ route('posts.show', $post->id) }}" class="block text-sm font-medium text-gray-900 hover:text-green-600 truncate">
                                         {{ $post->title }}
                                     </a>
-                                    <span class="block text-xs text-gray-400 shrink-0 mt-1 sm:mt-0">
+                                    <span class="block text-gray-400 shrink-0 mt-1 sm:mt-0">
                                         {{ $post->created_at->format('Y/m/d') }}
                                     </span>
                                 </div>
