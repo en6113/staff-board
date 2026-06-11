@@ -23,8 +23,8 @@ enum NewsPriority: string
     {
         return match ($this) {
             self::Normal => 'bg-gray-100 text-gray-800',
-            self::Important => 'bg-purple-100 text-purple-800',
-            self::Urgent => 'bg-red-100 text-red-800',
+            self::Important => 'bg-amber-100 text-gray-800',
+            self::Urgent => 'bg-red-100 text-gray-800',
         };
     }
 }

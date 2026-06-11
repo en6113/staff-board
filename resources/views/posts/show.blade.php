@@ -8,8 +8,8 @@
             <div class="border-b pb-4 mb-6">
                 <div class="flex items-center space-x-2 mb-2">
                     <span
-                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $post->type === 'circular' ? 'bg-purple-100 text-purple-800' : 'bg-amber-100 text-amber-800' }}">
-                        {{ $post->type === 'circular' ? '回覧' : '掲示' }}
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium shrink-0 {{ $post->type->colorClass() }}">
+                        {{ $post->type->label() }}
                     </span>
 
                     <span class="text-xs text-gray-500">
@@ -47,9 +47,9 @@
 
             {{-- フッター・操作ボタン --}}
             <div class="flex justify-between items-center mt-8 pt-4 border-t">
-                <a href="{{ route('posts.index') }}"
+                <a href="{{ url()->previous() }}"
                     class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded transition text-sm">
-                    &larr; 一覧に戻る
+                    &larr; 戻る
                 </a>
             </div>
 
