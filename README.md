@@ -39,7 +39,7 @@
 
 ## ER図
 
-![ER図](docs\images\erd_20260804.png)
+![ER図](/docs/images/erd_20260804.png)
 
 ## 動作環境
 
