@@ -12,10 +12,21 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create( [
-            'name' => 'user',
-            'email' => 'user@example.com',
-            'password' => bcrypt('password'),
-        ]);
+        $users = [
+            [
+                'name' => 'user',
+                'email' => 'user@example.com',
+                'password' => bcrypt('password'),
+            ],
+            [
+                'name' => 'user2',
+                'email' => 'user2@example.com',
+                'password' => bcrypt('password'),
+            ],
+        ];
+
+        foreach($users as $user) {
+            User::create($user);
+        }
     }
 }
